@@ -11,6 +11,8 @@ fastapi_app = FastAPI()
 import pprint
 import sys
 
+load_dotenv()
+
 pp = pprint.PrettyPrinter(indent=2)
 print("-- os.environ:")
 pp.pprint(dict(os.environ))
@@ -18,9 +20,6 @@ print("-- sys.argv:")
 pp.pprint(sys.argv)
 print("-- end")
 sys.exit()
-
-
-load_dotenv()
 
 APIKEY=os.getenv("APIKEY")
 REGION=os.getenv("REGION")

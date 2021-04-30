@@ -13,12 +13,15 @@ import sys
 
 load_dotenv()
 
-pp = pprint.PrettyPrinter(indent=2)
-print("-- os.environ:")
-pp.pprint(dict(os.environ))
-print("-- sys.argv:")
-pp.pprint(sys.argv)
-print("-- end")
+def debug_print():
+  pp = pprint.PrettyPrinter(indent=2)
+  print("-- os.environ:")
+  pp.pprint(dict(os.environ))
+  print("-- sys.argv:")
+  pp.pprint(sys.argv)
+  print("-- end")
+
+# debug_print()
 
 APIKEY=os.getenv("APIKEY")
 REGION=os.getenv("REGION")
@@ -75,7 +78,7 @@ def fix_up_routing_table_route(private_ip):
     print(f"expecting zero or one route in the vpc routing table got {len(routes)}")
     return
   elif len(routes) == 0:
-    print(f"there are zero routes, creating a new route")
+    print(f"there are zero routes, creating a new route next hop: {private_ip}")
     zone_identity_model = {'name': ZONE}
     route_next_hop_prototype_model = {"address": private_ip}
     create_vpc_routing_table_route_response = service.create_vpc_routing_table_route(
@@ -100,8 +103,8 @@ def fix_up_routing_table_route(private_ip):
     print("vpc route table route is not action deliver")
     return
   if "address" not in route["next_hop"] or route["next_hop"]["address"] != private_ip:
+    print("fix required deleting route")
     delete_vpc_routing_table_route_response = service.delete_vpc_routing_table_route(VPC_ID, ROUTING_TABLE_ID, route["id"])
-    print(delete_vpc_routing_table_route_response)
     if delete_vpc_routing_table_route_response.status_code != 204:
       print("vpc route table route delete failed expecting status code 204 got {delete_vpc_routing_table_route_response.status_code}")
     # todo consider waiting for this route to be deleted and create a new route.  Instead waiting for the next timer

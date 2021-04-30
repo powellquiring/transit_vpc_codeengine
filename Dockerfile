@@ -20,4 +20,4 @@ COPY . /app
 # USER appuser
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
-CMD ["python", "vpnupdate.py"]
+CMD ["python", "vpnupdate.py", "fix"]

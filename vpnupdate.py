@@ -19,21 +19,15 @@ pp.pprint(dict(os.environ))
 print("-- sys.argv:")
 pp.pprint(sys.argv)
 print("-- end")
-sys.exit()
 
 APIKEY=os.getenv("APIKEY")
 REGION=os.getenv("REGION")
-print(f"pfqpfq REGION: {REGION}")
-
-VPN_GATEWAY_ID="0717-87b76c33-6a75-4300-94cf-b214a9677c64"
-# trans03-transit
-VPC_ID="r006-b84c89ed-caf0-4eb1-ac94-27d970f6ea0f"
-# transtfromgw
-ROUTING_TABLE_ID="r006-44574331-ab10-41b0-8022-a1839bc59266"
-ZONE="us-south-1"
-ENTERPRISE_CIDR="192.168.128.0/17"
-#  infromtgw
-ROUTE_NAME="infromtgw"
+VPN_GATEWAY_ID=os.getenv("VPN_GATEWAY_ID")
+VPC_ID=os.getenv("VPC_ID")
+ROUTING_TABLE_ID=os.getenv("ROUTING_TABLE_ID")
+ZONE=os.getenv("ZONE")
+ENTERPRISE_CIDR=os.getenv("ENTERPRISE_CIDR")
+ROUTE_NAME=os.getenv("ROUTE_NAME")
 
 authenticator = IAMAuthenticator(APIKEY)
 service = VpcV1(authenticator=authenticator)
